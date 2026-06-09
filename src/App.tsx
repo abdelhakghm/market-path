@@ -153,9 +153,12 @@ export default function App() {
       <header className="fixed top-4 left-4 right-4 z-50 transition-all duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 rounded-full border border-white/5 bg-slate-950/70 backdrop-blur-xl shadow-2xl flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <span className="text-xl sm:text-2xl font-black tracking-tight bg-gradient-to-r from-brand-gold via-brand-gold-200 to-brand-gold-600 bg-clip-text text-transparent flex items-center gap-1.5">
-              Market<span className="text-sky-100">Path</span>
-            </span>
+            <img 
+              src="https://i.imgur.com/6zJ7owo.png" 
+              alt="MarketPath Logo" 
+              className="h-9 w-auto object-contain flex items-center" 
+              referrerPolicy="no-referrer"
+            />
             <span className="hidden sm:inline-block px-2.5 py-0.5 text-[9px] font-bold rounded-full border border-brand-gold/25 bg-brand-gold/10 text-brand-gold">
               وكالة رقمية جزائرية
             </span>

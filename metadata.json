@@ -1,0 +1,6 @@
+{
+  "name": "MarketPath",
+  "description": "Premium digital marketing agency in Algeria specializing in social media, paid ads, content production, and local SEO.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

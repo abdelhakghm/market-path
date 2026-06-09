@@ -1,0 +1,103 @@
+@import "tailwindcss";
+
+@import url('https://fonts.googleapis.com/css2?family=Almarai:wght@400;700;800&family=Cairo:wght@300;400;500;600;700;800&display=swap');
+
+@theme {
+  --font-sans: "Cairo", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: "Almarai", ui-sans-serif, system-ui, sans-serif;
+  --color-brand-gold-50: #fefbeb;
+  --color-brand-gold-100: #fdf6c7;
+  --color-brand-gold-200: #fbe98e;
+  --color-brand-gold-300: #f8d54d;
+  --color-brand-gold-400: #f5bd21;
+  --color-brand-gold-500: #d49a11;
+  --color-brand-gold-600: #b5760b;
+  --color-brand-gold-700: #90530b;
+  --color-brand-gold: #D4AF37;
+  --color-brand-orange: #ff5e3a;
+  --color-bg-dark: #07070a;
+  --color-bg-card: #0e0e13;
+  --color-bg-card-hover: #13131b;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    font-family: var(--font-sans);
+    background-color: var(--color-bg-dark);
+    direction: rtl;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #07070a;
+}
+::-webkit-scrollbar-thumb {
+  background: #1c1c28;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-brand-gold);
+}
+
+/* Glassmorphism utility */
+.glass-panel {
+  background: rgba(14, 14, 19, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.glass-panel-gold {
+  background: rgba(14, 14, 19, 0.8);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+/* Glow effects */
+.glow-gold {
+  box-shadow: 0 0 40px -10px rgba(212, 175, 55, 0.2);
+}
+
+.glow-orange {
+  box-shadow: 0 0 40px -10px rgba(255, 94, 58, 0.25);
+}
+
+/* Shimmer animation */
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.animate-shimmer::after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  transform: translateX(-100%);
+  background-image: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.05) 20%,
+    rgba(255, 255, 255, 0.1) 60%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  animation: shimmer 2s infinite;
+  content: '';
+}

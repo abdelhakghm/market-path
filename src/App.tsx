@@ -36,7 +36,6 @@ import {
   pricingPackages,
   guarantees,
   processSteps,
-  testimonials,
   faqs,
   Service,
   PricingPackage
@@ -53,17 +52,8 @@ export default function App() {
   // Pricing Prepay discount state
   const [billingPeriod, setBillingPeriod] = useState<"monthly" | "quarterly">("monthly");
 
-  // Custom Pricing Simulator State
-  const [simulatedPlatforms, setSimulatedPlatforms] = useState<string[]>(["meta", "instagram"]);
-  const [simulatedReelsCount, setSimulatedReelsCount] = useState<number>(8);
-  const [simulatedGoogleMaps, setSimulatedGoogleMaps] = useState<boolean>(true);
-  const [simulatedShoot, setSimulatedShoot] = useState<boolean>(false);
-
   // FAQ Expanded index state
   const [expandedFaqId, setExpandedFaqId] = useState<string | null>(null);
-
-  // Active Testimonial Index
-  const [activeTestimonialIndex, setActiveTestimonialIndex] = useState(0);
 
   // Booking Modal States
   const [isBookingOpen, setIsBookingOpen] = useState(false);
@@ -85,7 +75,7 @@ export default function App() {
       const scrollPos = window.scrollY;
       
       // Update header glass effect based on scroll position
-      const sections = ["hero", "why-us", "services", "pricing", "guarantees", "how-it-works", "testimonials", "faq"];
+      const sections = ["hero", "why-us", "services", "pricing", "guarantees", "how-it-works", "faq"];
       
       for (const sectionId of sections) {
         const el = document.getElementById(sectionId);
@@ -106,7 +96,7 @@ export default function App() {
   // Format Pre-filled WhatsApp message based on form
   const getWhatsAppLink = () => {
     const text = `السلام عليكم ماركتباث (MarketPath)، أرغب في حجز الاستشارة المجانية المخصصة لمشروعي.\n\n*الاسم:* ${bookingForm.name}\n*رقم الهاتف:* ${bookingForm.phone}\n*اسم الشركة:* ${bookingForm.businessName}\n*النشاط التجاري:* ${bookingForm.sector}\n*الميزانية الإعلانية المتوقعة:* ${bookingForm.budget}\n*الرسالة:* ${bookingForm.message || "لا توجد رسالة مخصصة، أود مناقشة خطة النمو بالتفصيل."}`;
-    return `https://wa.me/213554316928?text=${encodeURIComponent(text)}`;
+    return `https://wa.me/213558620107?text=${encodeURIComponent(text)}`;
   };
 
   // Simulate Booking form submission
@@ -144,28 +134,7 @@ export default function App() {
     });
   };
 
-  // Dynamic custom simulator price calculation for DA/Month
-  const calculateCustomPrice = () => {
-    let base = 35000; // Base strategy & setup cost in DA
-    
-    // Video rates
-    base += simulatedReelsCount * 4500; // 4500 DA per professional Reel (planning + editing)
-    
-    // Platform rates
-    base += (simulatedPlatforms.length - 1) * 12000; // 12,000 DA extra per social network beyond 1st
-    
-    // Add-on maps optimization
-    if (simulatedGoogleMaps) {
-      base += 10000;
-    }
-    
-    // Raw site video production shoot day
-    if (simulatedShoot) {
-      base += 30000;
-    }
 
-    return base;
-  };
 
   return (
     <div className="min-h-screen text-slate-100 bg-[#060709] relative overflow-hidden selection:bg-brand-gold selection:text-black">
@@ -223,12 +192,6 @@ export default function App() {
               className={`px-3.5 py-2 rounded-full transition-all ${activeSection === "how-it-works" ? "text-brand-gold bg-white/5" : "hover:text-brand-gold-200 hover:bg-white/5"}`}
             >
               آلية العمل
-            </a>
-            <a 
-              href="#testimonials" 
-              className={`px-3.5 py-2 rounded-full transition-all ${activeSection === "testimonials" ? "text-brand-gold bg-white/5" : "hover:text-brand-gold-200 hover:bg-white/5"}`}
-            >
-              أراء شركائنا
             </a>
             <a 
               href="#faq" 
@@ -305,13 +268,6 @@ export default function App() {
                 آلية العمل
               </a>
               <a 
-                href="#testimonials" 
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="py-2.5 border-b border-white/5 hover:text-brand-gold transition-colors"
-              >
-                أراء شركائنا
-              </a>
-              <a 
                 href="#faq" 
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="py-2.5 hover:text-brand-gold transition-colors"
@@ -384,78 +340,7 @@ export default function App() {
           </motion.div>
         </div>
 
-        {/* Dynamic Agency KPI Metric Showcase Dashboard mockup */}
-        <motion.div 
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-          className="relative max-w-5xl mx-auto rounded-2xl border border-white/5 bg-slate-950/40 p-1 backdrop-blur-md shadow-2xl glow-gold"
-        >
-          <div className="rounded-xl overflow-hidden glass-panel border border-white/5 p-4 sm:p-6 md:p-8">
-            {/* Mock Dashboard Top Control Bar */}
-            <div className="flex flex-col sm:flex-row items-center justify-between border-b border-white/5 pb-4 sm:pb-6 mb-6 sm:mb-8 gap-4">
-              <div className="flex items-center gap-3">
-                <span className="w-3 h-3 rounded-full bg-emerald-500 animate-pulse" />
-                <h3 className="font-bold text-xs sm:text-sm text-slate-100 flex items-center gap-1.5">
-                  لوحة الأداء الحية لشركاء ماركتباث بالجزائر
-                  <span className="text-[10px] font-mono text-slate-500 tracking-wider">LIVE DATA</span>
-                </h3>
-              </div>
-              <div className="flex items-center gap-2 text-[11px] font-bold text-slate-400 bg-white/5 px-3 py-1.5 rounded-full border border-white/5">
-                <Clock size={12} className="text-brand-gold" />
-                <span>آخر تحديث: اليوم، {new Date().toLocaleDateString('ar-dz')}</span>
-              </div>
-            </div>
 
-            {/* Micro Live metrics widgets inside the mockup */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 text-right">
-              <div className="p-4 sm:p-5 rounded-2xl border border-brand-orange/10 bg-brand-orange/5 hover:border-brand-orange/25 transition-all">
-                <div className="flex items-center justify-between mb-2 sm:mb-3">
-                  <span className="p-2 rounded-xl bg-brand-orange/10 text-brand-orange"><TrendingUp size={16} /></span>
-                  <span className="text-[10px] font-semibold text-brand-orange bg-brand-orange/10 px-2 py-0.5 rounded border border-brand-orange/20">ROAS متوسط</span>
-                </div>
-                <div className="text-2xl sm:text-3xl font-black text-white">4.8x</div>
-                <p className="text-[10px] sm:text-xs text-slate-400 mt-1">عائد الاستثمار الإعلاني المباشر</p>
-              </div>
-
-              <div className="p-4 sm:p-5 rounded-2xl border border-brand-gold/15 bg-brand-gold/5 hover:border-brand-gold/30 transition-all">
-                <div className="flex items-center justify-between mb-2 sm:mb-3">
-                  <span className="p-2 rounded-xl bg-brand-gold/10 text-brand-gold"><MessageSquare size={16} /></span>
-                  <span className="text-[10px] font-semibold text-brand-gold bg-brand-gold/10 px-2 py-0.5 rounded border border-brand-gold/20">جاهز للتواصل</span>
-                </div>
-                <div className="text-2xl sm:text-3xl font-black text-white">450K+</div>
-                <p className="text-[10px] sm:text-xs text-slate-400 mt-1">رسالة واستفسار تم توليدها للزبائن</p>
-              </div>
-
-              <div className="p-4 sm:p-5 rounded-2xl border border-white/5 bg-slate-900/20 hover:border-white/10 transition-all">
-                <div className="flex items-center justify-between mb-2 sm:mb-3">
-                  <span className="p-2 rounded-xl bg-slate-800/55 text-slate-300"><Cpu size={16} /></span>
-                  <span className="text-[10px] font-semibold text-slate-400 bg-slate-950/30 px-2 py-0.5 rounded border border-white/10">الفيديوهات</span>
-                </div>
-                <div className="text-2xl sm:text-3xl font-black text-white">1,200+</div>
-                <p className="text-[10px] sm:text-xs text-slate-400 mt-1">فيديو Reel ومحتوى قصير ممنتج</p>
-              </div>
-
-              <div className="p-4 sm:p-5 rounded-2xl border border-white/5 bg-slate-900/20 hover:border-white/10 transition-all">
-                <div className="flex items-center justify-between mb-2 sm:mb-3">
-                  <span className="p-2 rounded-xl bg-slate-800/55 text-slate-300"><MapPin size={16} /></span>
-                  <span className="text-[10px] font-semibold text-slate-400 bg-slate-950/30 px-2 py-0.5 rounded border border-white/10">خرائط محلية</span>
-                </div>
-                <div className="text-2xl sm:text-3xl font-black text-white">92%</div>
-                <p className="text-[10px] sm:text-xs text-slate-400 mt-1">نسبة ظهور بطاقات العملاء بالثلث الأكثر طلباً</p>
-              </div>
-            </div>
-
-            {/* Tiny live note badge footer */}
-            <div className="mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-right text-[11px] text-slate-500">
-              <p>نعمل بجهد وثبات لنمنح الشركات الجزائرية الحجم الذي تستحقه. لا نعتمد حلول الأوتوميشن العشوائي، بل نصنع عملاً أصيلاً.</p>
-              <div className="flex items-center gap-1.5 font-bold text-brand-gold/80">
-                <CheckCircle2 size={12} />
-                <span>متوافق كلياً مع قوانين التجارة الإلكترونية الجزائرية</span>
-              </div>
-            </div>
-          </div>
-        </motion.div>
       </section>
 
       {/* Why MarketPath Section — Values Case */}
@@ -748,152 +633,7 @@ export default function App() {
             })}
           </div>
 
-          {/* Interactive Pricing Simulator Widget for Algerian Businessmen */}
-          <div className="max-w-4xl mx-auto rounded-3xl border border-white/5 bg-slate-950/40 p-6 sm:p-8 backdrop-blur-md shadow-2xl">
-            <div className="text-center sm:text-right mb-8">
-              <div className="inline-block px-3 py-1 rounded-full border border-brand-orange/20 bg-brand-orange/10 text-brand-orange text-xs font-bold mb-3">
-                محاكي مخصص للتصميم الحر
-              </div>
-              <h3 className="text-xl sm:text-2xl font-black text-white">هل تبحث عن باقة مفصلة حسب مقاس مؤسستك؟</h3>
-              <p className="text-xs sm:text-sm text-slate-400 mt-1">
-                استخدم جهاز استبيان الأسعار التفاعلي لتقدير الموازنة التقريبية لمتطلبات علامتك بالجزائر العاصمة والولايات الأخرى.
-              </p>
-            </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
-              {/* Left Controls */}
-              <div className="md:col-span-7 flex flex-col gap-6 text-right">
-                
-                {/* Reels Slider */}
-                <div>
-                  <div className="flex items-center justify-between mb-2">
-                    <label className="text-xs sm:text-sm font-bold text-slate-300">طموح الفيديوهات القصيرة (Reels / TikToks):</label>
-                    <span className="text-xs font-bold text-brand-gold bg-brand-gold/10 px-2.5 py-0.5 rounded border border-brand-gold/20">
-                      {simulatedReelsCount} فيديو / شهرياً
-                    </span>
-                  </div>
-                  <input
-                    type="range"
-                    min="4"
-                    max="30"
-                    step="2"
-                    value={simulatedReelsCount}
-                    onChange={(e) => setSimulatedReelsCount(parseInt(e.target.value))}
-                    className="w-full accent-brand-gold cursor-pointer h-1.5 bg-slate-800 rounded-lg appearance-none"
-                  />
-                  <span className="text-[10px] text-slate-500 block mt-1">تتضمن التخطيط السينمائي، التصوير (في العاصمة والوسط)، المونتاج والنشر.</span>
-                </div>
-
-                {/* Platforms selection */}
-                <div>
-                  <label className="text-xs sm:text-sm font-bold text-slate-300 block mb-3">المنصات المطلوب نشر المحتوى والمبيعات بها:</label>
-                  <div className="grid grid-cols-2 gap-3">
-                    {[
-                      { id: "instagram", name: "إنستغرام (Instagram)" },
-                      { id: "meta", name: "فيسبوك (Facebook)" },
-                      { id: "tiktok", name: "تيك توك (TikTok)" },
-                      { id: "linkedin", name: "لينكد إن (LinkedIn)" }
-                    ].map((platform) => {
-                      const isChecked = simulatedPlatforms.includes(platform.id);
-                      return (
-                        <button
-                          key={platform.id}
-                          onClick={() => {
-                            if (isChecked) {
-                              if (simulatedPlatforms.length > 1) {
-                                  setSimulatedPlatforms(simulatedPlatforms.filter(p => p !== platform.id));
-                              }
-                            } else {
-                              setSimulatedPlatforms([...simulatedPlatforms, platform.id]);
-                            }
-                          }}
-                          className={`p-3 rounded-xl border text-xs font-semibold text-right transition-all flex items-center justify-between cursor-pointer ${isChecked ? "bg-slate-900 border-brand-gold/30 text-brand-gold" : "bg-slate-950/40 border-white/5 hover:border-white/10 text-slate-400"}`}
-                        >
-                          <span>{platform.name}</span>
-                          <span className={`w-4 h-4 rounded-full flex items-center justify-center border ${isChecked ? "bg-brand-gold border-brand-gold text-black text-[10px] font-black" : "border-slate-600"}`}>
-                            {isChecked && <Check size={10} />}
-                          </span>
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                {/* Optional Add-ons checklists */}
-                <div className="flex flex-col gap-3 pt-2">
-                  <label className="text-xs sm:text-sm font-bold text-slate-300">خيارات وخدمات متممة إضافية للشركات الجزائرية:</label>
-                  
-                  <div 
-                    onClick={() => setSimulatedGoogleMaps(!simulatedGoogleMaps)}
-                    className="p-3.5 rounded-xl border border-white/5 bg-slate-950/40 hover:border-white/10 cursor-pointer flex items-center justify-between text-right"
-                  >
-                    <div className="flex items-start gap-3">
-                      <span className={`p-1.5 rounded-lg border text-brand-gold ${simulatedGoogleMaps ? "bg-brand-gold/10 border-brand-gold/30" : "bg-slate-900 border-white/5"}`}><MapPin size={16} /></span>
-                      <div className="flex flex-col items-start text-right">
-                        <span className="text-xs sm:text-sm font-bold text-white">ضبط وتصدر محرك البحث بخرائط جوجل (Local SEO)</span>
-                        <span className="text-[10px] text-slate-400">جمع التقييمات التلقائي وتحسين خرائط الجزائر. (+10k دج)</span>
-                      </div>
-                    </div>
-                    <span className={`w-5 h-5 rounded border flex items-center justify-center transition-all ${simulatedGoogleMaps ? "bg-brand-gold border-brand-gold text-black text-[12px] font-bold" : "border-slate-600"}`}>
-                      {simulatedGoogleMaps && <Check size={12} />}
-                    </span>
-                  </div>
-
-                  <div 
-                    onClick={() => setSimulatedShoot(!simulatedShoot)}
-                    className="p-3.5 rounded-xl border border-white/5 bg-slate-950/40 hover:border-white/10 cursor-pointer flex items-center justify-between text-right"
-                  >
-                    <div className="flex items-start gap-3">
-                      <span className={`p-1.5 rounded-lg border text-brand-gold ${simulatedShoot ? "bg-brand-gold/10 border-brand-gold/30" : "bg-slate-900 border-white/5"}`}><Cpu size={16} /></span>
-                      <div className="flex flex-col items-start text-right">
-                        <span className="text-xs sm:text-sm font-bold text-white">يوم تصوير إنتاجي كامل مخصص (مقركم بالميدان)</span>
-                        <span className="text-[10px] text-slate-400">حضور فريق ومعدات وكاميرا سينمائية للتغطية. (+30k دج)</span>
-                      </div>
-                    </div>
-                    <span className={`w-5 h-5 rounded border flex items-center justify-center transition-all ${simulatedShoot ? "bg-brand-gold border-brand-gold text-black text-[12px] font-bold" : "border-slate-600"}`}>
-                      {simulatedShoot && <Check size={12} />}
-                    </span>
-                  </div>
-                </div>
-
-              </div>
-
-              {/* Right Output Dashboard display for simulated price in DA */}
-              <div className="md:col-span-5 p-6 rounded-2xl bg-slate-900 border border-white/5 flex flex-col justify-between text-center md:text-right sticky top-24">
-                <div>
-                  <span className="text-xs font-bold text-brand-gold block mb-2 uppercase tracking-wide">التقدير المقترح المتوقع</span>
-                  <h4 className="font-extrabold text-base sm:text-lg text-white mb-2">النظام المخصص لعلامتكم الرقمية</h4>
-                  <p className="text-[11px] text-slate-400 leading-relaxed mb-6">
-                    بناءً على تفضيلاتكم، تم احتساب استثمار عادل يشمل صياغة الاستراتيجية والمخرجات والشروع في الإنشاء.
-                  </p>
-                </div>
-
-                <div className="border-y border-white/5 py-6 mb-6">
-                  <span className="text-3xl sm:text-4xl font-black text-brand-gold">{calculateCustomPrice().toLocaleString()}</span>
-                  <span className="text-xs font-bold text-slate-400 block mt-1.5">دينار جزائري (دج) / شهرياً تقديراً</span>
-                </div>
-
-                <div className="text-[10px] text-slate-400 leading-relaxed mb-6">
-                  <span className="text-brand-gold inline-block ml-1">✓</span>
-                  تلتزم هذه الموازنة التقديرية بالضمانات الذهبية المكتوبة لماركتباث الجزائر لضمان تطلعكم.
-                </div>
-
-                <button
-                  onClick={() => {
-                    setBookingForm(prev => ({
-                      ...prev,
-                      message: `أود مناقشة الباقة المخصصة المحسوبة:\n- Reels: ${simulatedReelsCount}\n- Platforms: ${simulatedPlatforms.join(", ")}\n- Local SEO: ${simulatedGoogleMaps ? "YES" : "NO"}\n- Physical Shoot: ${simulatedShoot ? "YES" : "NO"}\n- Estimated Rate: ${calculateCustomPrice().toLocaleString()} DA/month`
-                    }));
-                    setIsBookingOpen(true);
-                  }}
-                  id="simulator_quote_btn"
-                  className="w-full py-3 rounded-xl font-bold text-xs sm:text-sm bg-gradient-to-l from-brand-gold to-brand-gold-600 text-black hover:scale-[1.01] active:scale-[0.99] transition-all cursor-pointer"
-                >
-                  اطلب تسعيرة رسمية استناداً لهذا
-                </button>
-              </div>
-            </div>
-          </div>
 
         </div>
       </section>
@@ -1001,85 +741,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* Testimonials Section — Real Market Verification in Algeria */}
-      <section id="testimonials" className="py-20 md:py-28 border-t border-white/5 relative">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
 
-          {/* Section Heading */}
-          <div className="text-center max-w-2xl mx-auto mb-16 sm:mb-20">
-            <span className="px-3.5 py-1 rounded-full border border-brand-orange/25 bg-brand-orange/10 text-brand-orange text-xs sm:text-sm font-bold tracking-wider inline-block mb-4">
-              نتائج ميدانية حية
-            </span>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black mb-4 select-none">
-              شركاؤنا يتحدثون عن طعم الأرقام مع <span className="text-brand-gold">MarketPath</span>
-            </h2>
-            <p className="text-xs sm:text-sm md:text-base text-slate-400">
-              لا شيء أكثر بلاغة من مبيعات متحركة وأصحاب مشاريع كسروا جمود السوق وتصاعدت ثقتهم بمحيطهم.
-            </p>
-          </div>
-
-          <div className="max-w-4xl mx-auto">
-            <AnimatePresence mode="wait">
-              {testimonials.map((test, index) => {
-                if (index !== activeTestimonialIndex) return null;
-
-                return (
-                  <motion.div
-                    key={test.id}
-                    initial={{ opacity: 0, scale: 0.98, y: 10 }}
-                    animate={{ opacity: 1, scale: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.98, y: -10 }}
-                    transition={{ duration: 0.2 }}
-                    className="p-6 sm:p-10 rounded-3xl glass-panel-gold border-brand-gold/25 text-right relative flex flex-col md:flex-row gap-8 items-center"
-                  >
-                    {/* Big testimonial metric stat badge on left/top */}
-                    <div className="md:w-1/3 flex flex-col items-center justify-center p-6 rounded-2xl bg-brand-gold text-black text-center shadow-lg shadow-brand-gold/5 min-w-[180px]">
-                      <span className="text-xs font-bold uppercase tracking-wider mb-2 text-black/60">تحول الأداء</span>
-                      <span className="text-3xl sm:text-5xl font-black tracking-tight">{test.stat}</span>
-                      <p className="text-xs font-extrabold mt-2 leading-tight text-slate-900">{test.statLabel}</p>
-                    </div>
-
-                    {/* Review content details */}
-                    <div className="flex-1 text-right">
-                      {/* Quote layout icon */}
-                      <span className="text-6xl text-brand-gold/10 font-serif leading-none block absolute top-6 left-6 select-none">“</span>
-
-                      <span className="px-2.5 py-0.5 rounded text-[10px] font-bold bg-white/5 border border-white/5 text-brand-gold">{test.businessType}</span>
-                      <h3 className="text-xl font-bold text-white mt-2">{test.businessName}</h3>
-                      <p className="text-xs text-slate-500 mt-1 flex items-center gap-1">
-                        <MapPin size={11} className="text-brand-orange" />
-                        <span>{test.location}</span>
-                      </p>
-
-                      <p className="text-slate-300 text-xs sm:text-sm md:text-base leading-relaxed my-6 italic">
-                        "{test.quote}"
-                      </p>
-
-                      <div className="border-t border-white/5 pt-4">
-                        <span className="text-[10px] sm:text-xs text-slate-400 block font-bold">الإنجاز المباشر:</span>
-                        <span className="text-xs sm:text-sm text-brand-gold font-medium">{test.achievement}</span>
-                      </div>
-                    </div>
-                  </motion.div>
-                );
-              })}
-            </AnimatePresence>
-
-            {/* Testimonials controls pagination dots */}
-            <div className="mt-8 flex items-center justify-center gap-2">
-              {testimonials.map((_, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setActiveTestimonialIndex(idx)}
-                  className={`h-2 rounded-full transition-all cursor-pointer ${activeTestimonialIndex === idx ? "w-8 bg-brand-gold" : "w-2 bg-slate-800 hover:bg-slate-700"}`}
-                  aria-label={`Go to slide ${idx + 1}`}
-                />
-              ))}
-            </div>
-          </div>
-
-        </div>
-      </section>
 
       {/* FAQs Section — Interactive Accordion */}
       <section id="faq" className="py-20 md:py-28 border-t border-white/5 relative bg-[#090a0d]">
@@ -1174,11 +836,11 @@ export default function App() {
             <div className="mt-12 flex flex-wrap items-center justify-center gap-6 sm:gap-10 border-t border-white/5 pt-8 w-full text-slate-400 text-xs">
               <span className="flex items-center gap-2 hover:text-white transition-colors cursor-pointer">
                 <Phone size={14} className="text-brand-gold" />
-                <a href="tel:+213554316928">+213 (0) 554 31 69 28</a>
+                <a href="tel:+213558620107">+213 (0) 558 62 01 07</a>
               </span>
               <span className="flex items-center gap-2 hover:text-white transition-colors cursor-pointer">
                 <Mail size={14} className="text-brand-gold" />
-                <a href="mailto:hello@marketpath.dz">hello@marketpath.dz</a>
+                <a href="mailto:contact.marketpath@gmail.com">contact.marketpath@gmail.com</a>
               </span>
               <span className="flex items-center gap-2">
                 <MapPin size={14} className="text-brand-gold" />
